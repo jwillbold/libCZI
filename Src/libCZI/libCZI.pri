@@ -1,0 +1,3 @@
+INCLUDEPATH += $$PWD
+
+LIBS += -L$$OUT_PWD/../libCZI -llibCZI
