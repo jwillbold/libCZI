@@ -1,27 +1,27 @@
 //******************************************************************************
-// 
+//
 // libCZI is a reader for the CZI fileformat written in C++
 // Copyright (C) 2017  Zeiss Microscopy GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// 
+//
 // To obtain a commercial version please contact Zeiss Microscopy GmbH.
-// 
+//
 //******************************************************************************
 
 #include "stdafx.h"
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 #include "decoder_wic.h"
 #include "BitmapOperations.h"
 #include <wincodec.h>
@@ -145,8 +145,8 @@ static bool DeterminePixelType(const WICPixelFormatGUID& wicPxlFmt, GUID* destPi
 		/// <summary>	The WIC-pixel-format as reported by the decoder. </summary>
 		GUID wicPxlFmt;
 
-		/// <summary>	The WIC-pixel-format  that we wish to get from the decoder (if necessary, utilizing a WIC-fomat converter). 
-		/// 			If this has the value "GUID_WICPixelFormatUndefined" it means: I am not sure at this point, I have never 
+		/// <summary>	The WIC-pixel-format  that we wish to get from the decoder (if necessary, utilizing a WIC-fomat converter).
+		/// 			If this has the value "GUID_WICPixelFormatUndefined" it means: I am not sure at this point, I have never
 		/// 			seen this and it is not obvious to me what to do. </summary>
 		GUID wicDstPxlFmt;
 
@@ -294,7 +294,7 @@ static bool DeterminePixelType(const WICPixelFormatGUID& wicPxlFmt, GUID* destPi
 			cpWicBitmapFrameDecode,          // Input bitmap to convert
 			wicDestPxlFmt,				     // Destination pixel format
 			WICBitmapDitherTypeNone,         // Specified dither pattern
-			nullptr,                         // Specify a particular palette 
+			nullptr,                         // Specify a particular palette
 			0,                               // Alpha threshold
 			WICBitmapPaletteTypeCustom);     // Palette translation type
 		ThrowIfFailed("pFormatConverter->Initialize", hr);

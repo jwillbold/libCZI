@@ -1,23 +1,23 @@
 //******************************************************************************
-// 
+//
 // libCZI is a reader for the CZI fileformat written in C++
 // Copyright (C) 2017  Zeiss Microscopy GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// 
+//
 // To obtain a commercial version please contact Zeiss Microscopy GmbH.
-// 
+//
 //******************************************************************************
 
 #include "stdafx.h"
@@ -31,7 +31,7 @@ using namespace std;
 
 CSimpleStreamImpl::CSimpleStreamImpl(const wchar_t* filename)
 {
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 	errno_t err = _wfopen_s(&this->fp, filename, L"rb");
 #else
 	int /*error_t*/ err = 0;
@@ -50,7 +50,7 @@ CSimpleStreamImpl::CSimpleStreamImpl(const wchar_t* filename)
 	if (err != 0)
 	{
 		std::stringstream ss;
-#if (_WIN32)
+#if (_WIN32) && !defined(__MINGW32__)
 		char errMsg[100];
 		strerror_s(errMsg, err);
 		wstring_convert<codecvt_utf8<wchar_t>> utf8_conv;
@@ -69,7 +69,7 @@ CSimpleStreamImpl::~CSimpleStreamImpl()
 
 /*virtual*/void CSimpleStreamImpl::Read(std::uint64_t offset, void *pv, std::uint64_t size, std::uint64_t* ptrBytesRead)
 {
-#if defined(_WIN32)
+#if (_WIN32) && !defined(__MINGW32__)
 	int r = _fseeki64(this->fp, offset, SEEK_SET);
 #else
 	int r = fseeko(this->fp, offset, SEEK_SET);
@@ -88,7 +88,7 @@ CSimpleStreamImpl::~CSimpleStreamImpl()
 CSimpleStreamImplCppStreams::CSimpleStreamImplCppStreams(const wchar_t* filename)
 {
 	this->infile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 	this->infile.open(filename, ios::binary | ios::in);
 #else
 	// convert the wchar_t to an UTF8-string
@@ -116,7 +116,7 @@ void CSimpleStreamImplCppStreams::Read(std::uint64_t offset, void *pv, std::uint
 
 //----------------------------------------------------------------------------
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 CSimpleStreamImplWindows::CSimpleStreamImplWindows(const wchar_t* filename)
 	: handle(INVALID_HANDLE_VALUE)
 {

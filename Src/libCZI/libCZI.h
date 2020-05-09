@@ -1,23 +1,23 @@
 //******************************************************************************
-// 
+//
 // libCZI is a reader for the CZI fileformat written in C++
 // Copyright (C) 2017  Zeiss Microscopy GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// 
+//
 // To obtain a commercial version please contact Zeiss Microscopy GmbH.
-// 
+//
 //******************************************************************************
 
 #pragma once
@@ -50,7 +50,7 @@ namespace libCZI
 	{
 		Default,		///< An enum constant representing the default option (which is JXRLib)
 		WithJxrDecoder  ///< An enum constant representing a Site-object using the internal JXRLib.
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 		, WithWICDecoder///< An enum constant representing a Site-object using the Windows WIC-codec.
 #endif
 	};
@@ -320,11 +320,11 @@ namespace libCZI
 		/// If no valid M-index was present, then this member will have the value std::numeric_limits<int>::min().
 		int maxMindex;
 
-		/// The bounding box determined from all sub-blocks in the 
+		/// The bounding box determined from all sub-blocks in the
 		/// document.
 		IntRect boundingBox;
 
-		/// The bounding box determined only from the sub-blocks of pyramid-layer0 in the 
+		/// The bounding box determined only from the sub-blocks of pyramid-layer0 in the
 		/// document.
 		IntRect boundingBoxLayer0Only;
 
@@ -387,7 +387,7 @@ namespace libCZI
 			/// \return True if the set of "not representable as pyramid-layer" is represented by this object, false if not.
 			bool IsNotIdentifiedAsPyramidLayer() const { return this->minificationFactor == 0xff && this->pyramidLayerNo == 0xff; }
 		};
-	
+
 		/// Information about a pyramid-layer.
 		struct PyramidLayerStatistics
 		{
@@ -404,7 +404,7 @@ namespace libCZI
 	class ISubBlockRepository
 	{
 	public:
-		/// Enumerate all sub-blocks. 
+		/// Enumerate all sub-blocks.
 		/// \param funcEnum The functor which will be called for every sub-block. If the return value of the
 		/// 				functor is true, the enumeration is continued, otherwise it is stopped.
 		/// 				The first argument is the index of the sub-block and the second is providing
