@@ -12,4 +12,6 @@ ENDIF()
 add_subdirectory(JxrDecode)
 add_subdirectory(libCZI)
 
-add_subdirectory(CZICmd)
+IF(NOT LIBCZI_SKIP_CZICMD)
+  add_subdirectory(CZICmd)
+ENDIF()
