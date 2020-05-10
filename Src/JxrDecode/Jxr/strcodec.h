@@ -71,7 +71,7 @@
 #include "arm.h"
 #endif
 
-#if defined(__ANSI__) || defined(__GNUC__) && !defined(__MINGW32__)
+#if (defined(__ANSI__) || defined(__GNUC__)) && !defined(__MINGW32__)
 #define PLATFORM_ANSI
 #include "ansi.h"
 #endif

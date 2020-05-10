@@ -44,7 +44,7 @@ void* CHeapAllocator::Allocate(std::uint64_t size)
 
 void CHeapAllocator::Free(void* ptr)
 {
-#if defined(__GNUC__)||defined(__EMSCRIPTEN__) && !defined(__MINGW32__)
+#if (defined(__GNUC__) || defined(__EMSCRIPTEN__)) && !defined(__MINGW32__)
 	free(ptr);
 #else
 	_aligned_free(ptr);
