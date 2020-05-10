@@ -33,7 +33,7 @@ void* CHeapAllocator::Allocate(std::uint64_t size)
 #if defined(__EMSCRIPTEN__)||defined(__APPLE__)
 	return malloc((size_t)size);
 #else
-#if defined(__GNUC__) || defined(__MINGW32__)
+#if defined(__GNUC__) && !defined(__MINGW32__)
 	return aligned_alloc(32, size);
 #else
 	void* pv = _aligned_malloc((size_t)size, 32);
@@ -44,7 +44,7 @@ void* CHeapAllocator::Allocate(std::uint64_t size)
 
 void CHeapAllocator::Free(void* ptr)
 {
-#if defined(__GNUC__)||defined(__EMSCRIPTEN__) || defined(__MINGW32__)
+#if defined(__GNUC__)||defined(__EMSCRIPTEN__) && !defined(__MINGW32__)
 	free(ptr);
 #else
 	_aligned_free(ptr);
