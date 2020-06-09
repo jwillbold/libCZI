@@ -24,9 +24,10 @@
 
 // TODO: we need a platform-independent replacement for GUID
 
-#if !defined(__GNUC__)
+#if !defined(__GNUC__) && !defined(__MINGW32__)
  #include <pshpack2.h>
-#define PACKED 
+#define PACKED
+#error "MinGW does not define 'PACKED __attribute__ ((__packed__))'"
 #else
  #define PACKED __attribute__ ((__packed__))
 #endif
@@ -147,6 +148,7 @@ struct PACKED FileHeaderSegmentData
 	std::int64_t AttachmentDirectoryPosition;
 	unsigned char _spare[SIZE_FILEHEADER_DATA - 80];  // offset 80
 };
+static_assert(sizeof(FileHeaderSegmentData)==512, "sizeof(FileHeaderSegmentData) != 512");
 
 // SubBlockDirectory - Entry: DE fixed size 256 bytes
 
@@ -319,7 +321,7 @@ struct PACKED FileHeaderSegment
 	struct FileHeaderSegmentData data;
 };
 
-#if !defined(__GNUC__)
+#if !defined(__GNUC__) && !defined(__MINGW32__)
  #include <poppack.h>
 #else
  #define PACK

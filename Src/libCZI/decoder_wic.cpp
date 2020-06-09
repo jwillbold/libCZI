@@ -21,7 +21,7 @@
 //******************************************************************************
 
 #include "stdafx.h"
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 #include "decoder_wic.h"
 #include "BitmapOperations.h"
 #include <wincodec.h>

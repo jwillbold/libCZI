@@ -22,7 +22,7 @@
 
 #pragma once
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 
 #include "libCZI_Pixels.h"
 #include "libCZI_Site.h"

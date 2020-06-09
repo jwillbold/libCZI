@@ -55,7 +55,7 @@ public:
 	}
 };
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 class CSiteImpWic : public CSiteImpBase
 {
 private:
@@ -93,7 +93,7 @@ public:
 	}
 };
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 static CSiteImpWic theWicSite;
 #endif
 static CSiteImpJxrLib theJxrLibSite;
@@ -122,7 +122,7 @@ libCZI::ISite* libCZI::GetDefaultSiteObject(SiteObjectType type)
 {
 	switch (type)
 	{
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 	case SiteObjectType::WithWICDecoder:
 		return &theWicSite;
 #endif

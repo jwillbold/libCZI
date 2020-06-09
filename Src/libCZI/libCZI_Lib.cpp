@@ -72,7 +72,7 @@ std::shared_ptr<IAccessor> libCZI::CreateAccesor(std::shared_ptr<ISubBlockReposi
 
 std::shared_ptr<IStream> libCZI::CreateStreamFromFile(const wchar_t* szFilename)
 {
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 	return make_shared<CSimpleStreamImplWindows>(szFilename);
 #else
 	return make_shared<CSimpleStreamImpl>(szFilename);

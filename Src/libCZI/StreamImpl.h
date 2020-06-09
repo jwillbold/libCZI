@@ -51,7 +51,7 @@ public:	// interface libCZI::IStream
 	virtual void Read(std::uint64_t offset, void *pv, std::uint64_t size, std::uint64_t* ptrBytesRead);
 };
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 class CSimpleStreamImplWindows : public libCZI::IStream
 {
 private:

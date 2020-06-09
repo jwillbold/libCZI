@@ -54,25 +54,26 @@
 
 #ifndef GUID_DEFINED
 #define GUID_DEFINED
-#if defined(__midl)
-typedef struct {
-	unsigned long  Data1;
-	unsigned short Data2;
-	unsigned short Data3;
-	byte           Data4[8];
-} GUID;
-#else
-typedef struct _GUID {
-#if defined(_WINDOWS_) || !__LP64__
-	unsigned long  Data1;
-#else
-	unsigned int   Data1;
-#endif
-	unsigned short Data2;
-	unsigned short Data3;
-	unsigned char  Data4[8];
-} GUID;
-#endif
+// #if defined(__midl)
+struct __attribute__ ((__packed__) GUID {
+	std::uint32_t  Data1;
+	std::uint16_t  Data2;
+	std::uint16_t  Data3;
+	std::uint8_t   Data4[8];
+};
+static_assert(sizeof(GUID)==16, "sizeof(GUID) != 16")
+// #else
+// typedef struct _GUID {
+// #if defined(_WINDOWS_) || !__LP64__
+// 	unsigned long  Data1;
+// #else
+// 	unsigned int   Data1;
+// #endif
+// 	unsigned short Data2;
+// 	unsigned short Data3;
+// 	unsigned char  Data4[8];
+// } GUID;
+// #endif
 #endif
 
 #ifndef FAR

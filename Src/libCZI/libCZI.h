@@ -50,7 +50,7 @@ namespace libCZI
 	{
 		Default,		///< An enum constant representing the default option (which is JXRLib)
 		WithJxrDecoder  ///< An enum constant representing a Site-object using the internal JXRLib.
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 		, WithWICDecoder///< An enum constant representing a Site-object using the Windows WIC-codec.
 #endif
 	};
