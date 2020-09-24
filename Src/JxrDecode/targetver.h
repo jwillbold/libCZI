@@ -7,7 +7,6 @@
 
 #if defined(_WIN32)||defined(_WIN64)
 
- #include <SDKDDKVer.h>
+ // #include <SDKDDKVer.h>
 
 #endif
-
